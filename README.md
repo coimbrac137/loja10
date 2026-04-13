@@ -7,8 +7,7 @@ Sistema de loja virtual com login, cadastro, produtos e carrinho de compras.
 - Login/Cadastro de usuários
 - Catálogo de produtos (Descobertas do Dia + Eletrônicos)
 - Busca em tempo real
-- Carrinho de compras
-- Painel administrativo
+
 
 ## 🛠️ Tecnologias
 - **Frontend:** HTML5, CSS3, JavaScript

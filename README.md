@@ -30,10 +30,12 @@ loja10/
 ----baner.png # Banner 
 ---------------------------------------------------------------------------------------
 Páginas que faltam
-produto.php - Página individual do produto
+- Página individual do produto
 
-carrinho.php - Página do carrinho
+- Página do carrinho
 
-checkout.php - Finalizar compra
+- Finalizar compra
 
-admin/ - Painel para cadastrar produtos                                                                                                                      sistema pronto para ser hospedado em servidores do tipo hostinger
+admin/ - Painel para cadastrar produtos 
+
+sistema pronto para ser hospedado em servidores do tipo hostinger

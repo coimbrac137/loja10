@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOJA 10 - Login e Cadastro</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdef5 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle at 10% 20%, rgba(33, 147, 176, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .container {
+            background: white;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(33, 147, 176, 0.15);
+            overflow: hidden;
+            width: 100%;
+            max-width: 480px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .logo {
+            text-align: center;
+            padding: 40px 20px 30px;
+            background: linear-gradient(135deg, #42a5f5 0%, #1e88e5 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: translate(-30%, -30%);
+            }
+            100% {
+                transform: translate(30%, 30%);
+            }
+        }
+
+        .logo-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .cart-icon {
+            font-size: 48px;
+            filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.2));
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .logo h1 {
+            font-size: 52px;
+            color: white;
+            font-weight: 800;
+            text-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);
+            letter-spacing: 3px;
+            background: linear-gradient(135deg, #fff 0%, #e3f2fd 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo p {
+            color: rgba(255, 255, 255, 0.95);
+            margin-top: 10px;
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        .tabs {
+            display: flex;
+            background: #f8fafc;
+            border-bottom: 2px solid #e2e8f0;
+            padding: 0 20px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 18px;
+            background: none;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #64748b;
+            position: relative;
+        }
+
+        .tab-btn::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #42a5f5, #1e88e5);
+            transition: width 0.3s ease;
+        }
+
+        .tab-btn.active {
+            color: #1e88e5;
+        }
+
+        .tab-btn.active::after {
+            width: 100%;
+        }
+
+        .tab-btn:hover:not(.active) {
+            color: #42a5f5;
+            background: rgba(66, 165, 245, 0.05);
+        }
+
+        .form-container {
+            padding: 35px 30px;
+            background: white;
+        }
+
+        .form {
+            display: none;
+            animation: fadeInUp 0.4s ease;
+        }
+
+        .form.active {
+            display: block;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #334155;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            outline: none;
+            background: #f8fafc;
+            font-family: inherit;
+        }
+
+        .input-group input:focus {
+            border-color: #42a5f5;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(66, 165, 245, 0.1);
+        }
+
+        .input-group input.error {
+            border-color: #ef4444;
+            background: #fef2f2;
+        }
+
+        .error-message {
+            color: #ef4444;
+            font-size: 12px;
+            margin-top: 6px;
+            display: none;
+            font-weight: 500;
+        }
+
+        .error-message.show {
+            display: block;
+            animation: shake 0.3s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #42a5f5 0%, #1e88e5 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-submit::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-submit:hover::before {
+            left: 100%;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(30, 136, 229, 0.3);
+        }
+
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+
+        .message {
+            margin-top: 25px;
+            padding: 14px;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 14px;
+            display: none;
+            animation: slideDown 0.3s ease;
+            font-weight: 500;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message.success {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #c8e6c9;
+        }
+
+        .message.error {
+            background: #ffebee;
+            color: #c62828;
+            border: 1px solid #ffcdd2;
+        }
+
+        .message.info {
+            background: #e3f2fd;
+            color: #1565c0;
+            border: 1px solid #bbdefb;
+        }
+
+        .forgot-password {
+            text-align: right;
+            margin-top: -15px;
+            margin-bottom: 20px;
+        }
+
+        .forgot-password a {
+            color: #42a5f5;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .forgot-password a:hover {
+            color: #1e88e5;
+            text-decoration: underline;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                max-width: 100%;
+                border-radius: 20px;
+            }
+
+            .form-container {
+                padding: 25px 20px;
+            }
+
+            .logo h1 {
+                font-size: 38px;
+            }
+
+            .cart-icon {
+                font-size: 38px;
+            }
+
+            .logo {
+                padding: 30px 20px 25px;
+            }
+        }
+
+        input:-webkit-autofill,
+        input:-webkit-autofill:focus {
+            transition: background-color 600000s 0s, color 600000s 0s;
+        }
+
+        .loading {
+            opacity: 0.7;
+            pointer-events: none;
+        }
+
+        /* Loading spinner */
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 0.8s linear infinite;
+            margin-right: 8px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <div class="logo-content">
+                <div class="cart-icon">🛒</div>
+                <h1>LOJA 10</h1>
+            </div>
+            <p>Sua loja de confiança com os melhores preços</p>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('login')">Login</button>
+            <button class="tab-btn" onclick="switchTab('register')">Cadastro</button>
+        </div>
+
+        <div class="form-container">
+            <div id="loginForm" class="form active">
+                <div class="input-group">
+                    <label>Email</label>
+                    <input type="email" id="loginEmail" placeholder="seu@email.com">
+                    <div class="error-message" id="loginEmailError"></div>
+                </div>
+
+                <div class="input-group">
+                    <label>Senha</label>
+                    <input type="password" id="loginPassword" placeholder="Digite sua senha">
+                    <div class="error-message" id="loginPasswordError"></div>
+                </div>
+
+                <div class="forgot-password">
+                    <a href="#" onclick="forgotPassword(event)">Esqueceu a senha?</a>
+                </div>
+
+                <button class="btn-submit" id="loginBtn" onclick="handleLogin()">Entrar na Loja</button>
+            </div>
+
+            <div id="registerForm" class="form">
+                <div class="input-group">
+                    <label>Nome Completo</label>
+                    <input type="text" id="regName" placeholder="Digite seu nome completo">
+                    <div class="error-message" id="regNameError"></div>
+                </div>
+
+                <div class="input-group">
+                    <label>Email</label>
+                    <input type="email" id="regEmail" placeholder="seu@email.com">
+                    <div class="error-message" id="regEmailError"></div>
+                </div>
+
+                <div class="input-group">
+                    <label>Senha</label>
+                    <input type="password" id="regPassword" placeholder="Mínimo 6 caracteres">
+                    <div class="error-message" id="regPasswordError"></div>
+                </div>
+
+                <div class="input-group">
+                    <label>Confirmar Senha</label>
+                    <input type="password" id="regConfirmPassword" placeholder="Digite a senha novamente">
+                    <div class="error-message" id="regConfirmError"></div>
+                </div>
+
+                <button class="btn-submit" id="registerBtn" onclick="handleRegister()">Criar Minha Conta</button>
+            </div>
+
+            <div id="message"></div>
+        </div>
+    </div>
+
+    <script>
+        // Usuários cadastrados (simulando banco de dados)
+        let users = JSON.parse(localStorage.getItem('loja10_users')) || [];
+
+        // Usuário demo
+        if (users.length === 0) {
+            users.push({
+                id: 1,
+                name: "Usuário Demo",
+                email: "demo@loja10.com",
+                password: "123456"
+            });
+            localStorage.setItem('loja10_users', JSON.stringify(users));
+        }
+
+        function showMessage(text, type) {
+            const messageDiv = document.getElementById('message');
+            messageDiv.innerHTML = text;
+            messageDiv.className = `message ${type}`;
+            
+            setTimeout(() => {
+                messageDiv.className = 'message';
+                messageDiv.innerHTML = '';
+            }, 3000);
+        }
+
+        function clearErrors(formType) {
+            if (formType === 'login') {
+                document.getElementById('loginEmailError').classList.remove('show');
+                document.getElementById('loginPasswordError').classList.remove('show');
+                document.getElementById('loginEmail').classList.remove('error');
+                document.getElementById('loginPassword').classList.remove('error');
+            } else {
+                document.getElementById('regNameError').classList.remove('show');
+                document.getElementById('regEmailError').classList.remove('show');
+                document.getElementById('regPasswordError').classList.remove('show');
+                document.getElementById('regConfirmError').classList.remove('show');
+                document.getElementById('regName').classList.remove('error');
+                document.getElementById('regEmail').classList.remove('error');
+                document.getElementById('regPassword').classList.remove('error');
+                document.getElementById('regConfirmPassword').classList.remove('error');
+            }
+        }
+
+        function switchTab(tab) {
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+            const tabs = document.querySelectorAll('.tab-btn');
+            
+            clearErrors('login');
+            clearErrors('register');
+            
+            if (tab === 'login') {
+                loginForm.classList.add('active');
+                registerForm.classList.remove('active');
+                tabs[0].classList.add('active');
+                tabs[1].classList.remove('active');
+            } else {
+                loginForm.classList.remove('active');
+                registerForm.classList.add('active');
+                tabs[0].classList.remove('active');
+                tabs[1].classList.add('active');
+            }
+            
+            document.getElementById('message').className = 'message';
+            document.getElementById('message').innerHTML = '';
+        }
+
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        function showLoading(button, show, text) {
+            if (show) {
+                button.innerHTML = '<span class="spinner"></span>' + text;
+                button.disabled = true;
+                button.classList.add('loading');
+            } else {
+                button.innerHTML = text;
+                button.disabled = false;
+                button.classList.remove('loading');
+            }
+        }
+
+        async function handleLogin() {
+            clearErrors('login');
+            
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            const loginBtn = document.getElementById('loginBtn');
+            let isValid = true;
+            
+            if (!email) {
+                document.getElementById('loginEmailError').textContent = 'Email é obrigatório';
+                document.getElementById('loginEmailError').classList.add('show');
+                document.getElementById('loginEmail').classList.add('error');
+                isValid = false;
+            } else if (!validateEmail(email)) {
+                document.getElementById('loginEmailError').textContent = 'Email inválido';
+                document.getElementById('loginEmailError').classList.add('show');
+                document.getElementById('loginEmail').classList.add('error');
+                isValid = false;
+            }
+            
+            if (!password) {
+                document.getElementById('loginPasswordError').textContent = 'Senha é obrigatória';
+                document.getElementById('loginPasswordError').classList.add('show');
+                document.getElementById('loginPassword').classList.add('error');
+                isValid = false;
+            }
+            
+            if (!isValid) return;
+            
+            // Mostrar loading
+            showLoading(loginBtn, true, 'Entrando na loja...');
+            
+            // Simular pequeno delay
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            // Verificar usuário
+            const user = users.find(u => u.email === email && u.password === password);
+            
+            if (user) {
+                showMessage(`✅ <strong>Bem-vindo(a) ${user.name}!</strong><br>Login realizado com sucesso! Redirecionando...`, 'success');
+                localStorage.setItem('loja10_current_user', JSON.stringify(user));
+                setTimeout(() => {
+                    window.location.href = 'pagina2.html';
+                }, 1500);
+            } else {
+                showMessage('❌ <strong>Falha no login!</strong><br>Email ou senha incorretos. Tente novamente.', 'error');
+                showLoading(loginBtn, false, 'Entrar na Loja');
+            }
+        }
+        
+        async function handleRegister() {
+            clearErrors('register');
+            
+            const name = document.getElementById('regName').value.trim();
+            const email = document.getElementById('regEmail').value.trim();
+            const password = document.getElementById('regPassword').value;
+            const confirmPassword = document.getElementById('regConfirmPassword').value;
+            const registerBtn = document.getElementById('registerBtn');
+            let isValid = true;
+            
+            if (!name) {
+                document.getElementById('regNameError').textContent = 'Nome é obrigatório';
+                document.getElementById('regNameError').classList.add('show');
+                document.getElementById('regName').classList.add('error');
+                isValid = false;
+            } else if (name.length < 3) {
+                document.getElementById('regNameError').textContent = 'Nome deve ter pelo menos 3 caracteres';
+                document.getElementById('regNameError').classList.add('show');
+                document.getElementById('regName').classList.add('error');
+                isValid = false;
+            }
+            
+            if (!email) {
+                document.getElementById('regEmailError').textContent = 'Email é obrigatório';
+                document.getElementById('regEmailError').classList.add('show');
+                document.getElementById('regEmail').classList.add('error');
+                isValid = false;
+            } else if (!validateEmail(email)) {
+                document.getElementById('regEmailError').textContent = 'Email inválido';
+                document.getElementById('regEmailError').classList.add('show');
+                document.getElementById('regEmail').classList.add('error');
+                isValid = false;
+            } else if (users.some(u => u.email === email)) {
+                document.getElementById('regEmailError').textContent = 'Email já cadastrado';
+                document.getElementById('regEmailError').classList.add('show');
+                document.getElementById('regEmail').classList.add('error');
+                isValid = false;
+            }
+            
+            if (!password) {
+                document.getElementById('regPasswordError').textContent = 'Senha é obrigatória';
+                document.getElementById('regPasswordError').classList.add('show');
+                document.getElementById('regPassword').classList.add('error');
+                isValid = false;
+            } else if (password.length < 6) {
+                document.getElementById('regPasswordError').textContent = 'Senha deve ter no mínimo 6 caracteres';
+                document.getElementById('regPasswordError').classList.add('show');
+                document.getElementById('regPassword').classList.add('error');
+                isValid = false;
+            }
+            
+            if (!confirmPassword) {
+                document.getElementById('regConfirmError').textContent = 'Confirme sua senha';
+                document.getElementById('regConfirmError').classList.add('show');
+                document.getElementById('regConfirmPassword').classList.add('error');
+                isValid = false;
+            } else if (password !== confirmPassword) {
+                document.getElementById('regConfirmError').textContent = 'As senhas não coincidem';
+                document.getElementById('regConfirmError').classList.add('show');
+                document.getElementById('regConfirmPassword').classList.add('error');
+                isValid = false;
+            }
+            
+            if (!isValid) return;
+            
+            // Mostrar loading
+            showLoading(registerBtn, true, 'Criando conta...');
+            
+            // Simular pequeno delay
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            // Criar novo usuário
+            const newUser = {
+                id: Date.now(),
+                name: name,
+                email: email,
+                password: password
+            };
+            
+            users.push(newUser);
+            localStorage.setItem('loja10_users', JSON.stringify(users));
+            
+            showMessage(`🎉 <strong>Conta criada com sucesso!</strong><br>Bem-vindo(a) ${name}! Redirecionando para o login...`, 'success');
+            
+            // Limpar formulário
+            document.getElementById('regName').value = '';
+            document.getElementById('regEmail').value = '';
+            document.getElementById('regPassword').value = '';
+            document.getElementById('regConfirmPassword').value = '';
+            
+            // Mudar para aba de login após 1.5 segundos
+            setTimeout(() => {
+                switchTab('login');
+                showMessage('✨ <strong>Faça seu login</strong><br>Use suas credenciais para entrar na loja.', 'info');
+                showLoading(registerBtn, false, 'Criar Minha Conta');
+            }, 1500);
+        }
+        
+        function forgotPassword(event) {
+            event.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            if (email && validateEmail(email)) {
+                showMessage(`📧 <strong>Email enviado!</strong><br>Um link de recuperação foi enviado para ${email}`, 'info');
+            } else {
+                showMessage('📝 <strong>Atenção!</strong><br>Digite seu email no campo acima para recuperar a senha', 'info');
+            }
+        }
+        
+        // Validação em tempo real
+        document.getElementById('regEmail').addEventListener('blur', function() {
+            const email = this.value.trim();
+            if (email && !validateEmail(email)) {
+                document.getElementById('regEmailError').textContent = 'Email inválido';
+                document.getElementById('regEmailError').classList.add('show');
+                this.classList.add('error');
+            } else {
+                document.getElementById('regEmailError').classList.remove('show');
+                this.classList.remove('error');
+            }
+        });
+        
+        document.getElementById('regConfirmPassword').addEventListener('input', function() {
+            const password = document.getElementById('regPassword').value;
+            if (this.value && this.value !== password) {
+                document.getElementById('regConfirmError').textContent = 'As senhas não coincidem';
+                document.getElementById('regConfirmError').classList.add('show');
+                this.classList.add('error');
+            } else {
+                document.getElementById('regConfirmError').classList.remove('show');
+                this.classList.remove('error');
+            }
+        });
+
+        document.getElementById('regPassword').addEventListener('input', function() {
+            const confirmPassword = document.getElementById('regConfirmPassword').value;
+            if (confirmPassword && this.value !== confirmPassword) {
+                document.getElementById('regConfirmError').textContent = 'As senhas não coincidem';
+                document.getElementById('regConfirmError').classList.add('show');
+                document.getElementById('regConfirmPassword').classList.add('error');
+            } else if (confirmPassword) {
+                document.getElementById('regConfirmError').classList.remove('show');
+                document.getElementById('regConfirmPassword').classList.remove('error');
+            }
+        });
+    </script>
+</body>
+</html>

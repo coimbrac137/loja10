@@ -20,12 +20,14 @@ Sistema de loja virtual com login, cadastro, produtos e carrinho de compras.
 loja10/
 - index.html # Login/Cadastro
 - pagina2.html # Loja virtual
+
 -api/
 -- config.php # Conexão MySQL
 -- login.php # Autenticação
 --register.php # Cadastro
 -- logout.php # Sair
 --- database.sql # Estrutura do BD
+
 --- assets/
 ----baner.png # Banner 
 ---------------------------------------------------------------------------------------

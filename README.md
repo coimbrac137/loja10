@@ -43,4 +43,4 @@ Páginas que faltam
 
 admin/ - Painel para cadastrar produtos 
 
-sistema pronto para ser hospedado em servidores do tipo hostinger
+sistema pronto para ser adpatado e hospedado em servidores do tipo hostinger

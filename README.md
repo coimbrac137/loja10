@@ -22,13 +22,13 @@ loja10/
 - pagina2.html # Loja virtual
 
 -api/
--- config.php # Conexão MySQL
--- login.php # Autenticação
+--config.php # Conexão MySQL
+--login.php # Autenticação
 --register.php # Cadastro
--- logout.php # Sair
+--logout.php # Sair
 --- database.sql # Estrutura do BD
 
---- assets/
+-assets/
 ----baner.png # Banner 
 ---------------------------------------------------------------------------------------
 Páginas que faltam

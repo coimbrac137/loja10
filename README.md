@@ -16,20 +16,17 @@ Sistema de loja virtual com login, cadastro, produtos e carrinho de compras.
 - **Banco de Dados:** MySQL
 - **Servidor:** XAMPP/WAMP/MAMP
 
-## 📁 Estrutura
 loja10/
-- index.html # Login/Cadastro
-- pagina2.html # Loja virtual
-
--api/
---config.php # Conexão MySQL
---login.php # Autenticação
---register.php # Cadastro
---logout.php # Sair
---- database.sql # Estrutura do BD
-
--assets/
-----baner.png # Banner 
+├── index.html # Login/Cadastro
+├── pagina2.html # Loja virtual
+├── database.sql # Estrutura do BD
+├── api/
+│ ├── config.php # Conexão MySQL
+│ ├── login.php # Autenticação
+│ ├── register.php # Cadastro
+│ └── logout.php # Sair
+└── assets/
+└── banner.png # Banner
 ---------------------------------------------------------------------------------------
 Páginas que faltam
 - Página individual do produto

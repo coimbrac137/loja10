@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOJA 10 - Descobertas do Dia | Eletrônicos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #f0f8ff;
+        }
+
+        /* Header - Azul claro */
+        .header {
+            background: linear-gradient(135deg, #42a5f5 0%, #1e88e5 100%);
+            padding: 12px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(30, 136, 229, 0.2);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .cart-icon {
+            font-size: 28px;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
+        }
+
+        .search-bar {
+            flex: 1;
+            display: flex;
+            max-width: 500px;
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 12px 16px;
+            border: none;
+            border-radius: 8px 0 0 8px;
+            font-size: 14px;
+            outline: none;
+            background: white;
+        }
+
+        .search-bar button {
+            padding: 12px 24px;
+            background: #1565c0;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 0 8px 8px 0;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .search-bar button:hover {
+            background: #0d47a1;
+        }
+
+        .user-actions {
+            display: flex;
+            gap: 20px;
+            color: white;
+            font-size: 14px;
+            align-items: center;
+            margin-left: auto;
+        }
+
+        .cart-bag {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            padding: 8px 12px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .cart-bag:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.05);
+        }
+
+        .cart-bag span:first-child {
+            font-size: 20px;
+        }
+
+        .logout-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            padding: 8px 12px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.05);
+        }
+
+        /* Categorias */
+        .categories {
+            background: white;
+            padding: 12px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border-bottom: 1px solid #e3f2fd;
+        }
+
+        .categories-list {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            gap: 40px;
+            padding: 0 20px;
+            justify-content: center;
+        }
+
+        .category-item {
+            text-align: center;
+            cursor: pointer;
+            font-size: 14px;
+            color: #555;
+            padding: 5px 15px;
+            border-radius: 20px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .category-item:hover {
+            background: #e3f2fd;
+            color: #1e88e5;
+        }
+
+        .category-item.active {
+            background: #42a5f5;
+            color: white;
+        }
+
+        /* Banner */
+        .banner {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        .banner-content {
+            background: linear-gradient(135deg, #64b5f6, #1e88e5);
+            border-radius: 16px;
+            padding: 0;
+            text-align: center;
+            color: white;
+            box-shadow: 0 4px 15px rgba(30, 136, 229, 0.2);
+            overflow: hidden;
+        }
+
+        .banner-content img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Seções */
+        .section {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-left: 4px solid #42a5f5;
+            padding-left: 15px;
+        }
+
+        .section-header h2 {
+            font-size: 22px;
+            color: #1a237e;
+            font-weight: 700;
+        }
+
+        .section-header span {
+            font-size: 13px;
+            color: #42a5f5;
+            cursor: pointer;
+        }
+
+        /* Grid de Produtos */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(30, 136, 229, 0.15);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #f5f5f5, #e8e8e8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 64px;
+            position: relative;
+        }
+
+        .discount-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: #ef5350;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .product-info {
+            padding: 15px;
+        }
+
+        .product-title {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 10px;
+            line-height: 1.4;
+            height: 40px;
+            overflow: hidden;
+            display: -webkit-box;  
+            -webkit-box-orient: vertical;
+            font-weight: 500;
+        }
+
+        .price-container {
+            margin-bottom: 8px;
+        }
+
+        .product-price {
+            font-size: 20px;
+            font-weight: bold;
+            color: #1e88e5;
+        }
+
+        .product-original-price {
+            font-size: 13px;
+            color: #999;
+            text-decoration: line-through;
+            margin-left: 8px;
+            font-weight: normal;
+        }
+
+        .product-sold {
+            font-size: 12px;
+            color: #888;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #e3f2fd;
+            color: #1e88e5;
+            font-size: 11px;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+
+        .buy-btn {
+            width: 100%;
+            margin-top: 12px;
+            padding: 8px;
+            background: #42a5f5;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .buy-btn:hover {
+            background: #1e88e5;
+            transform: scale(1.02);
+        }
+
+        /* Footer */
+        .footer {
+            background: #e3f2fd;
+            border-top: 1px solid #bbdefb;
+            padding: 40px 20px 20px;
+            margin-top: 40px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 12px;
+            color: #1a237e;
+            font-size: 16px;
+        }
+
+        .footer-section p {
+            color: #455a64;
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            margin-top: 20px;
+            border-top: 1px solid #bbdefb;
+            color: #546e7a;
+            font-size: 12px;
+        }
+
+        /* Responsivo */
+        @media (max-width: 768px) {
+            .logo-area {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .search-bar {
+                max-width: 100%;
+                width: 100%;
+            }
+            
+            .user-actions {
+                justify-content: flex-end;
+                margin-top: 5px;
+            }
+            
+            .categories-list {
+                gap: 15px;
+                overflow-x: auto;
+                justify-content: flex-start;
+            }
+            
+            .category-item {
+                white-space: nowrap;
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+                gap: 15px;
+            }
+            
+            .product-image {
+                height: 170px;
+                font-size: 50px;
+            }
+            
+            .product-title {
+                font-size: 13px;
+            }
+            
+            .product-price {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="logo-area">
+                <div class="logo">
+                    <span class="cart-icon">🛒</span>
+                    <span>LOJA 10</span>
+                </div>
+                <div class="search-bar">
+                    <input type="text" id="searchInput" placeholder="Buscar produtos..." onkeyup="searchProducts()">
+                    <button onclick="searchProducts()">Buscar</button>
+                </div>
+                <div class="user-actions">
+                    <div class="cart-bag" onclick="openCart()">
+                        <span>🛍️</span>
+                        <span>Sacola</span>
+                    </div>
+                    <div class="logout-btn" onclick="logout()">
+                        <span>🚪</span>
+                        <span>Sair</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="categories">
+        <div class="categories-list">
+            <div class="category-item active" data-cat="descobrir" onclick="filterCategory('descobrir')">✨ DESCOBERTAS DO DIA</div>
+            <div class="category-item" data-cat="eletronicos" onclick="filterCategory('eletronicos')">📱 ELETRÔNICOS</div>
+        </div>
+    </div>
+
+    <div class="banner">
+        <div class="banner-content">
+            <img src="baner.png" alt="Banner LOJA 10">
+        </div>
+    </div>
+
+    <!-- Seção Descobertas do Dia -->
+    <div class="section" id="descobrirSection">
+        <div class="section-header">
+            <h2>✨ DESCOBERTAS DO DIA</h2>
+            <span>VER MAIS →</span>
+        </div>
+        <div class="products-grid" id="descobrirGrid">
+            <!-- Produtos em destaque -->
+        </div>
+    </div>
+
+    <!-- Seção Eletrônicos -->
+    <div class="section" id="eletronicosSection">
+        <div class="section-header">
+            <h2>📱 ELETRÔNICOS</h2>
+            <span>VER MAIS →</span>
+        </div>
+        <div class="products-grid" id="eletronicosGrid">
+            <!-- Produtos eletrônicos -->
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>🛒 LOJA 10</h4>
+                <p>Sua loja online de confiança<br>Os melhores preços do mercado</p>
+            </div>
+            <div class="footer-section">
+                <h4>📞 ATENDIMENTO</h4>
+                <p>(11) 9999-9999</p>
+                <p>contato@loja10.com</p>
+                <p>Seg-Sex: 9h às 18h</p>
+            </div>
+            <div class="footer-section">
+                <h4>💳 FORMAS DE PAGAMENTO</h4>
+                <p>Cartão de Crédito</p>
+                <p>Pix</p>
+                <p>Boleto Bancário</p>
+            </div>
+            <div class="footer-section">
+                <h4>📦 INFORMAÇÕES</h4>
+                <p>Frete Grátis</p>
+                <p>Troca Fácil</p>
+                <p>Garantia Estendida</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2024 LOJA 10 - Todos os direitos reservados</p>
+        </div>
+    </div>
+
+    <script>
+        // Produtos - Descobertas do Dia
+        const descobrirProducts = [
+            { id: 1, name: "KIT lili creme e perfume 350ml acetinado corpo e...", price: 23.15, originalPrice: 35.90, sold: "6mil+", discount: 35, image: "🧴", category: "descobrir" },
+            { id: 2, name: "Almofada Bebê Cercadinho Assento Antiqueda Infantil...", price: 136.80, originalPrice: 189.90, sold: "2mil+", discount: 28, image: "🛋️", category: "descobrir" },
+            { id: 3, name: "Calça Cargo feminina Jeans Grafite Super...", price: 59.70, originalPrice: 129.90, sold: "10mil+", discount: 54, image: "👖", category: "descobrir" },
+            { id: 4, name: "Cadeira de Escritório Secretária Presidente Me...", price: 190.00, originalPrice: 399.00, sold: "1mil+", discount: 52, image: "💺", category: "descobrir" },
+            { id: 5, name: "Garrafa Térmica De Água 500ml Inox", price: 39.90, originalPrice: 79.90, sold: "15mil+", discount: 50, image: "🧊", category: "descobrir" },
+            { id: 6, name: "Pijama Feminino Conjunto Moletom", price: 69.90, originalPrice: 149.90, sold: "8.5mil+", discount: 53, image: "👗", category: "descobrir" },
+            { id: 7, name: "Short Para Academia Feminino", price: 29.90, originalPrice: 79.90, sold: "18mil+", discount: 63, image: "🩳", category: "descobrir" },
+            { id: 8, name: "Par De Aliança Casamento Prata", price: 89.90, originalPrice: 199.90, sold: "5.2mil+", discount: 55, image: "💍", category: "descobrir" }
+        ];
+
+        // Produtos - Eletrônicos
+        const eletronicosProducts = [
+            { id: 9, name: "Smart TV 43\" Britânia HDR10 Dolby Audio", price: 1287.08, originalPrice: 2199.00, sold: "446", discount: 41, image: "📺", category: "eletronicos" },
+            { id: 10, name: "Notebook Lenovo Thinkpad T495 Ryzen 5 Pro", price: 1793.41, originalPrice: 3499.00, sold: "205", discount: 49, image: "💻", category: "eletronicos" },
+            { id: 11, name: "Sony Playstation 4 500gb Ps4 Slim + Ea Fc", price: 2299.00, originalPrice: 2999.00, sold: "1.2mil+", discount: 23, image: "🎮", category: "eletronicos" },
+            { id: 12, name: "Apple iPhone 13 Branco 128gb Vitrine Grade A", price: 3299.00, originalPrice: 5299.00, sold: "856", discount: 38, image: "📱", category: "eletronicos" },
+            { id: 13, name: "Cpu Gamer Barato i5 4gb Ssd 240gb Wifi", price: 1899.00, originalPrice: 2499.00, sold: "324", discount: 24, image: "🖥️", category: "eletronicos" },
+            { id: 14, name: "Fone Sem Fio Bluetooth Estéreo", price: 49.90, originalPrice: 129.90, sold: "22mil+", discount: 62, image: "🎧", category: "eletronicos" },
+            { id: 15, name: "Mouse Gamer RGB 7 Botões", price: 79.90, originalPrice: 159.90, sold: "3.2mil+", discount: 50, image: "🖱️", category: "eletronicos" },
+            { id: 16, name: "Teclado Mecânico Rainbow", price: 149.90, originalPrice: 299.90, sold: "2.1mil+", discount: 50, image: "⌨️", category: "eletronicos" },
+            { id: 17, name: "Monitor 24'' Curvo 144hz", price: 899.00, originalPrice: 1499.00, sold: "978", discount: 40, image: "🖥️", category: "eletronicos" },
+            { id: 18, name: "Cadeira Gamer Reclinável", price: 699.00, originalPrice: 1299.00, sold: "1.5mil+", discount: 46, image: "💺", category: "eletronicos" },
+            { id: 19, name: "Mesa Digitalizadora Desenho", price: 249.90, originalPrice: 499.90, sold: "876", discount: 50, image: "📝", category: "eletronicos" },
+            { id: 20, name: "Smartwatch Pro Ultra 8", price: 199.90, originalPrice: 399.90, sold: "4.2mil+", discount: 50, image: "⌚", category: "eletronicos" }
+        ];
+
+        let currentSearch = '';
+
+        // Renderizar produtos
+        function renderProducts() {
+            let filteredDescobrir = [...descobrirProducts];
+            let filteredEletronicos = [...eletronicosProducts];
+            
+            if (currentSearch) {
+                filteredDescobrir = filteredDescobrir.filter(p => 
+                    p.name.toLowerCase().includes(currentSearch.toLowerCase())
+                );
+                filteredEletronicos = filteredEletronicos.filter(p => 
+                    p.name.toLowerCase().includes(currentSearch.toLowerCase())
+                );
+            }
+            
+            renderGrid('descobrirGrid', filteredDescobrir);
+            renderGrid('eletronicosGrid', filteredEletronicos);
+        }
+
+        function renderGrid(gridId, products) {
+            const grid = document.getElementById(gridId);
+            
+            if (products.length === 0) {
+                grid.innerHTML = '<p style="text-align: center; grid-column: 1/-1; padding: 40px; color: #999;">Nenhum produto encontrado</p>';
+                return;
+            }
+            
+            grid.innerHTML = products.map(product => `
+                <div class="product-card" onclick="buyProduct(${product.id})">
+                    <div class="product-image">
+                        ${product.image}
+                        ${product.discount ? `<div class="discount-badge">-${product.discount}%</div>` : ''}
+                    </div>
+                    <div class="product-info">
+                        <div class="product-title">${product.name}</div>
+                        <div class="price-container">
+                            <span class="product-price">R$ ${product.price.toFixed(2).replace('.', ',')}</span>
+                            ${product.originalPrice ? `<span class="product-original-price">R$ ${product.originalPrice.toFixed(2).replace('.', ',')}</span>` : ''}
+                        </div>
+                        <div class="product-sold">
+                            ${product.sold} Vendidos
+                            <span class="badge">⭐ Mais Vendido</span>
+                        </div>
+                        <button class="buy-btn">🛒 Comprar Agora</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Filtrar por categoria (rolagem suave)
+        function filterCategory(category) {
+            const buttons = document.querySelectorAll('.category-item');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            const activeBtn = Array.from(buttons).find(btn => btn.getAttribute('data-cat') === category);
+            if (activeBtn) activeBtn.classList.add('active');
+            
+            const section = document.getElementById(`${category}Section`);
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        // Buscar produtos
+        function searchProducts() {
+            currentSearch = document.getElementById('searchInput').value;
+            renderProducts();
+        }
+
+        // Comprar produto
+        function buyProduct(productId) {
+            const allProducts = [...descobrirProducts, ...eletronicosProducts];
+            const product = allProducts.find(p => p.id === productId);
+            alert(`🛒 Produto adicionado ao carrinho!\n\n📦 ${product.name}\n💰 R$ ${product.price.toFixed(2)}\n\n✅ Continue comprando na LOJA 10!`);
+        }
+
+        // Abrir sacola de compras
+        function openCart() {
+            alert("🛍️ SACOLA DE COMPRAS\n\nSeu carrinho está vazio no momento.\n\nAdicione produtos clicando em 'Comprar Agora'!");
+        }
+
+        // Função de logout
+        function logout() {
+            if(confirm("Deseja realmente sair da LOJA 10?")) {
+                window.location.href = 'index.html';
+            }
+        }
+
+        // Inicializar
+        renderProducts();
+    </script>
+</body>
+</html>

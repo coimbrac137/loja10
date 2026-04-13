@@ -18,16 +18,16 @@ Sistema de loja virtual com login, cadastro, produtos e carrinho de compras.
 
 ## 📁 Estrutura
 loja10/
-├── index.html # Login/Cadastro
-├── pagina2.html # Loja virtual
-├── api/
-│ ├── config.php # Conexão MySQL
-│ ├── login.php # Autenticação
-│ ├── register.php # Cadastro
-│ └── logout.php # Sair
-├── database.sql # Estrutura do BD
-└── assets/
-└── baner.png # Banner 
+- index.html # Login/Cadastro
+- pagina2.html # Loja virtual
+-api/
+-- config.php # Conexão MySQL
+-- login.php # Autenticação
+--register.php # Cadastro
+-- logout.php # Sair
+--- database.sql # Estrutura do BD
+--- assets/
+----baner.png # Banner 
 ---------------------------------------------------------------------------------------
 Páginas que faltam
 produto.php - Página individual do produto
